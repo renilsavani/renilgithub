@@ -1,6 +1,6 @@
 # Ecommerce app
 
-## Getting Started
+## project Sample
 
 This project is a ecommerce app for flutter devloper and this is sample app images 🥰 
 
