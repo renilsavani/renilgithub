@@ -1,4 +1,4 @@
-# Ecommerce app
+# E-commerce app
 
 ## project Sample
 
