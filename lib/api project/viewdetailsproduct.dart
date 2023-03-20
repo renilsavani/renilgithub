@@ -25,39 +25,73 @@ class _viewdetailsState extends State<viewdetails> {
         child: Row(children: [
           Expanded(
               child: InkWell(
-                onTap: () {},
-                child: Container(
-                  height: double.infinity,
-                  child: Center(
-                      child: Text("Add To Cart",
-                          style: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.bold))),
-                  color: Colors.orangeAccent,
+            onTap: () {},
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(25)),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.orange.withOpacity(0.6),
+                    Colors.deepOrange.withOpacity(0.5),
+                  ],
                 ),
-              )),
+              ),
+              height: double.infinity,
+              child: Center(
+                  child: Text("Add To Cart",
+                      style: TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.bold))),
+            ),
+          )),
           Expanded(
               child: InkWell(
-                onTap: () {},
-                child: Container(
-                  height: double.infinity,
-                  child: Center(
-                      child: Text("Buy Product",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white))),
-                  color: Colors.indigo,
+            onTap: () {},
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topRight: Radius.circular(25)),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.indigoAccent.withOpacity(0.6),
+                    Colors.blue.withOpacity(0.5),
+                  ],
                 ),
-              ))
+              ),
+              height: double.infinity,
+              child: Center(
+                  child: Text("Buy Product",
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white))),
+            ),
+          ))
         ]),
         height: 60,
       ),
       appBar: AppBar(
-          backgroundColor: Colors.indigo,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(25)),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.indigoAccent.withOpacity(0.6),
+                  Colors.blue.withOpacity(0.5),
+                ],
+              ),
+            ),
+          ),
+          backgroundColor: Colors.transparent,
           actions: [
             PopupMenuButton<int>(
-              itemBuilder: (context) =>
-              [
+              itemBuilder: (context) => [
                 // popupmenu item 1
                 PopupMenuItem(
                   onTap: () async {
@@ -102,9 +136,7 @@ class _viewdetailsState extends State<viewdetails> {
                 ),
                 // popupmenu item 2
                 PopupMenuItem(
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   value: 2,
                   // row has two child icon and text
                   child: Row(
@@ -150,8 +182,7 @@ class _viewdetailsState extends State<viewdetails> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(
-                            "https://renilflutter.000webhostapp.com/ecomerce/${widget
-                                .productdata.iMAGE}"),
+                            "https://renilflutter.000webhostapp.com/ecomerce/${widget.productdata.iMAGE}"),
                         fit: BoxFit.cover))),
           ),
           SizedBox(

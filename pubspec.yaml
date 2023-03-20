@@ -55,7 +55,10 @@ dependencies:
   connectivity_plus:
   internet_connection_checker:
   flutter_swipe_button:
-
+  flutter_staggered_animations:
+  custom_refresh_indicator:
+  flutter_animate:
+  page_transition:
 
 
 dev_dependencies:

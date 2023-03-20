@@ -88,7 +88,22 @@ class _addproductState extends State<addproduct>
                   text: "Discription",
                 )
               ]),
-              backgroundColor: Colors.indigo),
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  // borderRadius: BorderRadius.only(
+                  //     bottomRight: Radius.circular(25),
+                  //     bottomLeft: Radius.circular(25)),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.indigoAccent.withOpacity(0.6),
+                      Colors.blue.withOpacity(0.5),
+                    ],
+                  ),
+                ),
+              ),
+              backgroundColor: Colors.transparent),
           body: TabBarView(controller: _tabController, children: [
             Container(
               child: SingleChildScrollView(
@@ -204,18 +219,31 @@ class _addproductState extends State<addproduct>
                     child: Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: Card(
-                        color: Colors.indigo,
-                        child: TextButton(
-                            onPressed: () {
-                              _tabController.animateTo(1);
-                            },
-                            child: Text(
-                              "Next",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 16),
-                            )),
+                        color: Colors.transparent,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.indigoAccent.withOpacity(0.6),
+                                Colors.blue.withOpacity(0.5),
+                              ],
+                            ),
+                          ),
+                          child: TextButton(
+                              onPressed: () {
+                                _tabController.animateTo(1);
+                              },
+                              child: Text(
+                                "Next",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 16),
+                              )),
+                        ),
                       ),
                     ),
                   )
@@ -362,18 +390,30 @@ class _addproductState extends State<addproduct>
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: Card(
-                            color: Colors.indigo,
-                            child: TextButton(
-                                onPressed: () {
-                                  _tabController.animateTo(0);
-                                },
-                                child: Text(
-                                  "Back",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 16),
-                                )),
+                            color: Colors.transparent,
+                            child: Container(  decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.indigoAccent.withOpacity(0.6),
+                                  Colors.blue.withOpacity(0.5),
+                                ],
+                              ),
+                            ),
+                              child: TextButton(
+                                  onPressed: () {
+                                    _tabController.animateTo(0);
+                                  },
+                                  child: Text(
+                                    "Back",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 16),
+                                  )),
+                            ),
                           ),
                         ),
                       ),
@@ -383,18 +423,30 @@ class _addproductState extends State<addproduct>
                         child: Padding(
                           padding: const EdgeInsets.only(right: 20),
                           child: Card(
-                            color: Colors.indigo,
-                            child: TextButton(
-                                onPressed: () {
-                                  _tabController.animateTo(2);
-                                },
-                                child: Text(
-                                  " Next ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 16),
-                                )),
+                            color: Colors.transparent,
+                            child: Container(  decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.indigoAccent.withOpacity(0.6),
+                                  Colors.blue.withOpacity(0.5),
+                                ],
+                              ),
+                            ),
+                              child: TextButton(
+                                  onPressed: () {
+                                    _tabController.animateTo(2);
+                                  },
+                                  child: Text(
+                                    " Next ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 16),
+                                  )),
+                            ),
                           ),
                         ),
                       ),
@@ -441,18 +493,30 @@ class _addproductState extends State<addproduct>
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Card(
-                          color: Colors.indigo,
-                          child: TextButton(
-                              onPressed: () {
-                                _tabController.animateTo(1);
-                              },
-                              child: Text(
-                                "Back",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 16),
-                              )),
+                          color: Colors.transparent,
+                          child: Container(  decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.indigoAccent.withOpacity(0.6),
+                                Colors.blue.withOpacity(0.5),
+                              ],
+                            ),
+                          ),
+                            child: TextButton(
+                                onPressed: () {
+                                  _tabController.animateTo(1);
+                                },
+                                child: Text(
+                                  "Back",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 16),
+                                )),
+                          ),
                         ),
                       ),
                     ),
@@ -462,18 +526,30 @@ class _addproductState extends State<addproduct>
                       child: Padding(
                         padding: const EdgeInsets.only(right: 20),
                         child: Card(
-                          color: Colors.indigo,
-                          child: TextButton(
-                              onPressed: () {
-                                _tabController.animateTo(3);
-                              },
-                              child: Text(
-                                "Next",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 16),
-                              )),
+                          color: Colors.transparent,
+                          child: Container(  decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.indigoAccent.withOpacity(0.6),
+                                Colors.blue.withOpacity(0.5),
+                              ],
+                            ),
+                          ),
+                            child: TextButton(
+                                onPressed: () {
+                                  _tabController.animateTo(3);
+                                },
+                                child: Text(
+                                  "Next",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 16),
+                                )),
+                          ),
                         ),
                       ),
                     ),
@@ -524,27 +600,38 @@ class _addproductState extends State<addproduct>
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Card(
-                        color: Colors.indigo,
-                        child: TextButton(
-                            onPressed: () {
-                              _tabController.animateTo(2);
-                            },
-                            child: Text(
-                              "Back",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 16),
-                            )),
+                        color: Colors.transparent,
+                        child: Container(  decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Colors.indigoAccent.withOpacity(0.6),
+                              Colors.blue.withOpacity(0.5),
+                            ],
+                          ),
+                        ),
+                          child: TextButton(
+                              onPressed: () {
+                                _tabController.animateTo(2);
+                              },
+                              child: Text(
+                                "Back",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 16),
+                              )),
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 40,
                   ),
-
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.only(left: 30, right: 30),
                     child: SwipeButton.expand(
                       thumb: Icon(
                         Icons.double_arrow_rounded,
@@ -556,13 +643,11 @@ class _addproductState extends State<addproduct>
                           color: Colors.black,
                         ),
                       ),
-                      activeThumbColor: Colors.indigo,
+                      activeThumbColor: Colors.indigoAccent,
                       activeTrackColor: Colors.grey.shade300,
                       onSwipe: () async {
-                        String id =
-                            loginpage.prefs!.getString("userid") ?? "";
-                        List<int> imagebyte =
-                        File(img).readAsBytesSync();
+                        String id = loginpage.prefs!.getString("userid") ?? "";
+                        List<int> imagebyte = File(img).readAsBytesSync();
                         String imagename = base64Encode(imagebyte);
                         print(id);
                         Map addpro = {
@@ -580,10 +665,8 @@ class _addproductState extends State<addproduct>
 
                         var url = Uri.parse(
                             'https://renilflutter.000webhostapp.com/ecomerce/addproduct.php');
-                        var response =
-                            await http.post(url, body: addpro);
-                        print(
-                            'Response status: ${response.statusCode}');
+                        var response = await http.post(url, body: addpro);
+                        print('Response status: ${response.statusCode}');
                         print('Response body: ${response.body}');
                         var ii = jsonDecode(response.body);
                         aa = view.fromJson(ii);
@@ -591,14 +674,13 @@ class _addproductState extends State<addproduct>
                         if (aa!.connection == 1) {
                           if (aa!.result == 1) {
                             EasyLoading.dismiss(animation: false);
-                            EasyLoading.showSuccess(
-                                "Upload sucessfully");
+                            EasyLoading.showSuccess("Upload sucessfully");
                             Navigator.pushReplacement(context,
                                 MaterialPageRoute(
-                                  builder: (context) {
-                                    return homepage();
-                                  },
-                                ));
+                              builder: (context) {
+                                return homepage();
+                              },
+                            ));
                           }
                         }
                         ScaffoldMessenger.of(context).showSnackBar(

@@ -85,6 +85,21 @@ class _updateproductState extends State<updateproduct>
       length: 4,
       child: Scaffold(
           appBar: AppBar(
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  // borderRadius: BorderRadius.only(
+                  //     bottomRight: Radius.circular(25),
+                  //     bottomLeft: Radius.circular(25)),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.indigoAccent.withOpacity(0.6),
+                      Colors.blue.withOpacity(0.5),
+                    ],
+                  ),
+                ),
+              ),
               title: Text("update your product "),
               bottom: TabBar(controller: _tabController, tabs: [
                 Tab(
@@ -100,7 +115,7 @@ class _updateproductState extends State<updateproduct>
                   text: "Discription",
                 )
               ]),
-              backgroundColor: Colors.indigo),
+              backgroundColor: Colors.transparent),
           body: TabBarView(controller: _tabController, children: [
             Container(
               child: SingleChildScrollView(
@@ -216,18 +231,31 @@ class _updateproductState extends State<updateproduct>
                     child: Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: Card(
-                        color: Colors.indigo,
-                        child: TextButton(
-                            onPressed: () {
-                              _tabController.animateTo(1);
-                            },
-                            child: Text(
-                              "Next",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 16),
-                            )),
+                        color: Colors.transparent,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.indigoAccent.withOpacity(0.6),
+                                Colors.blue.withOpacity(0.5),
+                              ],
+                            ),
+                          ),
+                          child: TextButton(
+                              onPressed: () {
+                                _tabController.animateTo(1);
+                              },
+                              child: Text(
+                                "Next",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 16),
+                              )),
+                        ),
                       ),
                     ),
                   )
@@ -374,18 +402,31 @@ class _updateproductState extends State<updateproduct>
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: Card(
-                            color: Colors.indigo,
-                            child: TextButton(
-                                onPressed: () {
-                                  _tabController.animateTo(0);
-                                },
-                                child: Text(
-                                  "Back",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 16),
-                                )),
+                            color: Colors.transparent,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.indigoAccent.withOpacity(0.6),
+                                    Colors.blue.withOpacity(0.5),
+                                  ],
+                                ),
+                              ),
+                              child: TextButton(
+                                  onPressed: () {
+                                    _tabController.animateTo(0);
+                                  },
+                                  child: Text(
+                                    "Back",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 16),
+                                  )),
+                            ),
                           ),
                         ),
                       ),
@@ -395,18 +436,31 @@ class _updateproductState extends State<updateproduct>
                         child: Padding(
                           padding: const EdgeInsets.only(right: 20),
                           child: Card(
-                            color: Colors.indigo,
-                            child: TextButton(
-                                onPressed: () {
-                                  _tabController.animateTo(2);
-                                },
-                                child: Text(
-                                  " Next ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 16),
-                                )),
+                            color: Colors.transparent,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.indigoAccent.withOpacity(0.6),
+                                    Colors.blue.withOpacity(0.5),
+                                  ],
+                                ),
+                              ),
+                              child: TextButton(
+                                  onPressed: () {
+                                    _tabController.animateTo(2);
+                                  },
+                                  child: Text(
+                                    " Next ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 16),
+                                  )),
+                            ),
                           ),
                         ),
                       ),
@@ -466,18 +520,31 @@ class _updateproductState extends State<updateproduct>
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Card(
-                          color: Colors.indigo,
-                          child: TextButton(
-                              onPressed: () {
-                                _tabController.animateTo(1);
-                              },
-                              child: Text(
-                                "Back",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 16),
-                              )),
+                          color: Colors.transparent,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.indigoAccent.withOpacity(0.6),
+                                  Colors.blue.withOpacity(0.5),
+                                ],
+                              ),
+                            ),
+                            child: TextButton(
+                                onPressed: () {
+                                  _tabController.animateTo(1);
+                                },
+                                child: Text(
+                                  "Back",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 16),
+                                )),
+                          ),
                         ),
                       ),
                     ),
@@ -487,18 +554,31 @@ class _updateproductState extends State<updateproduct>
                       child: Padding(
                         padding: const EdgeInsets.only(right: 20),
                         child: Card(
-                          color: Colors.indigo,
-                          child: TextButton(
-                              onPressed: () {
-                                _tabController.animateTo(3);
-                              },
-                              child: Text(
-                                "Next",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 16),
-                              )),
+                          color: Colors.transparent,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.indigoAccent.withOpacity(0.6),
+                                  Colors.blue.withOpacity(0.5),
+                                ],
+                              ),
+                            ),
+                            child: TextButton(
+                                onPressed: () {
+                                  _tabController.animateTo(3);
+                                },
+                                child: Text(
+                                  "Next",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 16),
+                                )),
+                          ),
                         ),
                       ),
                     ),
@@ -549,18 +629,31 @@ class _updateproductState extends State<updateproduct>
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Card(
-                        color: Colors.indigo,
-                        child: TextButton(
-                            onPressed: () {
-                              _tabController.animateTo(2);
-                            },
-                            child: Text(
-                              "Back",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 16),
-                            )),
+                        color: Colors.transparent,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.indigoAccent.withOpacity(0.6),
+                                Colors.blue.withOpacity(0.5),
+                              ],
+                            ),
+                          ),
+                          child: TextButton(
+                              onPressed: () {
+                                _tabController.animateTo(2);
+                              },
+                              child: Text(
+                                "Back",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 16),
+                              )),
+                        ),
                       ),
                     ),
                   ),
@@ -568,7 +661,7 @@ class _updateproductState extends State<updateproduct>
                     height: 40,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.only(left: 30, right: 30),
                     child: SwipeButton.expand(
                       thumb: Icon(
                         Icons.double_arrow_rounded,
@@ -580,7 +673,7 @@ class _updateproductState extends State<updateproduct>
                           color: Colors.black,
                         ),
                       ),
-                      activeThumbColor: Colors.indigo,
+                      activeThumbColor: Colors.indigoAccent,
                       activeTrackColor: Colors.grey.shade300,
                       onSwipe: () async {
                         List<int> imagebyte = File(newimage).readAsBytesSync();

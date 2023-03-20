@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:http/http.dart' as http;
 import 'package:badges/badges.dart' as badges;
 import 'package:dotted_border/dotted_border.dart';
@@ -11,6 +12,7 @@ import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/api%20project/addproduct.dart';
 import 'package:shoppingapp/api%20project/loginpage.dart';
@@ -112,7 +114,7 @@ class _homepageState extends State<homepage> {
         }
       },
       child: AdvancedDrawer(
-        backdropColor: Colors.orangeAccent,
+        backdropColor: Colors.orange.shade300,
         controller: _advancedDrawerController,
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 300),
@@ -209,19 +211,6 @@ class _homepageState extends State<homepage> {
                         Text('Log out', style: TextStyle(color: Colors.black)),
                   ),
                   Spacer(),
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white54,
-                    ),
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 16.0,
-                      ),
-                      child: Text('Terms of Service | Privacy Policy',
-                          style: TextStyle(color: Colors.black)),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -230,12 +219,23 @@ class _homepageState extends State<homepage> {
         child: Scaffold(
           body: ll[a],
           bottomNavigationBar: GlassContainer(
-              shadowStrength: 6,
-              shadowColor: Colors.black38,
+              // shadowStrength: 6,
+              blur: 4,
+              shadowStrength: 5,
+              shadowColor: Colors.black.withOpacity(0.24),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.indigoAccent.withOpacity(0.6),
+                  Colors.blue.withOpacity(0.5),
+                ],
+              ),
+              color: Colors.indigo,
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(25), topLeft: Radius.circular(25)),
-              color: Colors.indigo,
-              blur: 20,
+              // color: Colors.indigo,
+              // blur: 20,
               height: 56,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -276,12 +276,25 @@ class _homepageState extends State<homepage> {
                 ],
               )),
           appBar: AppBar(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(25),
-                  bottomLeft: Radius.circular(25)),
+            backgroundColor: Colors.transparent,
+            elevation: 5,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(25)),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.indigoAccent.withOpacity(0.6),
+                    Colors.blue.withOpacity(0.5),
+                  ],
+                ),
+              ),
             ),
-            backgroundColor: Colors.indigo,
+
+            // backgroundColor: Colors.indigo,
             title: const Text('Ecommerce App'),
             actions: [
               InkWell(
@@ -378,267 +391,340 @@ class _viewproductState extends State<viewproduct> {
   Widget build(BuildContext context) {
     return Container(
         child: loder
-            ? SingleChildScrollView(
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              suffixIcon: Icon(Icons.search),
-                              hintText: "  search product",
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10.0),
-                              filled: true,
-                              fillColor: Colors.orangeAccent,
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none)),
-                        )),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text("Categories",
-                          style: GoogleFonts.adventPro(
-                              fontSize: 24, fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 100,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      itemCount: 6,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              // border: Border.all(),
-                              image: DecorationImage(
-                                  image: NetworkImage("${image[index]}"),
-                                  fit: BoxFit.fill),
-                              borderRadius: BorderRadius.circular(10)),
-                          margin: EdgeInsets.all(10),
-                          height: 80,
-                          width: 80,
-                          child: Center(
-                            child: Text('${name[index]}',
-                                style: TextStyle(
-                                    fontSize: 13, color: Colors.white)),
-                          ),
-                        );
+            ? RefreshIndicator(
+                color: Colors.deepOrange,
+                onRefresh: () {
+                  return Future.delayed(Duration(seconds: 1)).then((value) {
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) {
+                        return homepage();
                       },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text("Products",
-                          style: GoogleFonts.adventPro(
-                              fontSize: 24, fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                      height: 400,
-                      width: double.infinity,
-                      child: GridView.builder(
-                        itemCount: dd!.productdata!.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 0.8, crossAxisCount: 2),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onLongPress: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      backgroundColor: Colors.transparent,
-                                      actions: [
-                                        Center(
-                                          child: Container(
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    TextButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                            builder: (context) {
-                                                              return updateproduct(dd!.productdata![index]);
-                                                            },
-                                                          ));
-                                                        },
-                                                        child: Text(
-                                                          "update",
-                                                          style: TextStyle(
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .underline,
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 17),
-                                                        )),
-                                                    TextButton(
-                                                        onPressed: () async {
-                                                          // Navigator.pop(context);
-                                                          String aa =
-                                                              "${dd!.productdata![index].iD}";
-                                                          Map mm = {"IDD": aa};
-                                                          var url = Uri.parse(
-                                                              'https://renilflutter.000webhostapp.com/ecomerce/delete.php');
-                                                          var response =
-                                                              await http.post(
-                                                                  url,
-                                                                  body: mm);
-                                                          print(
-                                                              'Response status: ${response.statusCode}');
-                                                          print(
-                                                              'Response body: ${response.body}');
-                                                          var aa1 = jsonDecode(
-                                                              response.body);
-                                                          aa2 =
-                                                              ff.fromJson(aa1);
-
-                                                          if (aa2!.connection ==
-                                                              1) {
-                                                            if (aa2!.result ==
-                                                                1) {
-                                                              EasyLoading.show(
-                                                                  status:
-                                                                      "Please wait");
-                                                              Future.delayed(
-                                                                      Duration(
-                                                                          seconds:
-                                                                              2))
-                                                                  .then(
-                                                                      (value) {
-                                                                EasyLoading.dismiss(
-                                                                    animation:
-                                                                        false);
-                                                                Navigator
-                                                                    .pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                                    return homepage();
-                                                                  },
-                                                                ));
-                                                              });
-                                                            }
-                                                          }
-                                                        },
-                                                        child: Text(
-                                                          "delete",
-                                                          style: TextStyle(
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .underline,
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 17),
-                                                        ))
-                                                  ]),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.orangeAccent,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              height: 80,
-                                              width: 200),
-                                        )
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return viewdetails(dd!.productdata![index]);
-                                  },
-                                ));
-                              },
-                              child: Card(
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: GlassContainer(
-                                    blur: 4,
-                                    opacity: 0.2,
-                                    color: Colors.orangeAccent,
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          height: 125,
-                                          width: 112,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      "https://renilflutter.000webhostapp.com/ecomerce/${dd!.productdata![index].iMAGE}"),
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text("${dd!.productdata![index].nAME}",
-                                            style:
-                                                GoogleFonts.asap(fontSize: 18)),
-                                        SizedBox(
-                                          height: 7,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text(
-                                              "₹${dd!.productdata![index].mRP}",
-                                              style: TextStyle(
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
-                                            ),
-                                            Text(
-                                              "₹${dd!.productdata![index].pRICE}",
-                                              style: TextStyle(),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    )),
+                    ));
+                  });
+                },
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 5,
+                          // shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(20)),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.orange.withOpacity(0.6),
+                                  Colors.deepOrange.withOpacity(0.5),
+                                ],
                               ),
+                            ),
+                            child: TextField(
+                              onChanged: (value) {},
+                              decoration: InputDecoration(
+                                  suffixIcon: Icon(Icons.search),
+                                  hintText: "  search product",
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10.0),
+                                  // filled: true,
+                                  // fillColor: Colors.orange.shade400,
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide.none)),
+                            ),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text("Categories",
+                            style: GoogleFonts.adventPro(
+                                color: Colors.black54,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      height: 100,
+                      width: double.infinity,
+                      child: ListView.builder(
+                        itemCount: 6,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+
+                                // border: Border.all(),
+                                image: DecorationImage(
+                                    image: NetworkImage("${image[index]}"),
+                                    fit: BoxFit.fill),
+                                borderRadius: BorderRadius.circular(10)),
+                            margin: EdgeInsets.all(10),
+                            height: 80,
+                            width: 80,
+                            child: Center(
+                              child: Text('${name[index]}',
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.white)),
                             ),
                           );
                         },
-                      ))
-                ]),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text("Products",
+                            style: GoogleFonts.adventPro(
+                                color: Colors.black54,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                        height: 400,
+                        width: double.infinity,
+                        child: GridView.builder(
+                          itemCount: dd!.productdata!.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 0.8, crossAxisCount: 2),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onLongPress: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        backgroundColor: Colors.transparent,
+                                        actions: [
+                                          Center(
+                                            child: Container(
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                              builder:
+                                                                  (context) {
+                                                                return updateproduct(
+                                                                    dd!.productdata![
+                                                                        index]);
+                                                              },
+                                                            ));
+                                                          },
+                                                          child: Text(
+                                                            "update",
+                                                            style: TextStyle(
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 17),
+                                                          )),
+                                                      TextButton(
+                                                          onPressed: () async {
+                                                            // Navigator.pop(context);
+                                                            String aa =
+                                                                "${dd!.productdata![index].iD}";
+                                                            Map mm = {
+                                                              "IDD": aa
+                                                            };
+                                                            var url = Uri.parse(
+                                                                'https://renilflutter.000webhostapp.com/ecomerce/delete.php');
+                                                            var response =
+                                                                await http.post(
+                                                                    url,
+                                                                    body: mm);
+                                                            print(
+                                                                'Response status: ${response.statusCode}');
+                                                            print(
+                                                                'Response body: ${response.body}');
+                                                            var aa1 =
+                                                                jsonDecode(
+                                                                    response
+                                                                        .body);
+                                                            aa2 = ff
+                                                                .fromJson(aa1);
+
+                                                            if (aa2!.connection ==
+                                                                1) {
+                                                              if (aa2!.result ==
+                                                                  1) {
+                                                                EasyLoading.show(
+                                                                    status:
+                                                                        "Please wait");
+                                                                Future.delayed(Duration(
+                                                                        seconds:
+                                                                            2))
+                                                                    .then(
+                                                                        (value) {
+                                                                  EasyLoading.dismiss(
+                                                                      animation:
+                                                                          false);
+                                                                  Navigator.pushReplacement(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) {
+                                                                      return homepage();
+                                                                    },
+                                                                  ));
+                                                                });
+                                                              }
+                                                            }
+                                                          },
+                                                          child: Text(
+                                                            "delete",
+                                                            style: TextStyle(
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 17),
+                                                          ))
+                                                    ]),
+                                                decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      begin: Alignment.topLeft,
+                                                      end:
+                                                          Alignment.bottomRight,
+                                                      colors: [
+                                                        Colors.orange
+                                                            .withOpacity(0.6),
+                                                        Colors.deepOrange
+                                                            .withOpacity(0.5),
+                                                      ],
+                                                    ),
+                                                    // color: Colors.orange.shade300,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                height: 70,
+                                                width: 200),
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.fade,
+                                        child: viewdetails(
+                                            dd!.productdata![index]),
+                                        inheritTheme: true,
+                                        ctx: context),
+                                  );
+                                },
+                                child: Card(
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: GlassContainer(
+                                      blur: 4,
+                                      opacity: 0.2,
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Colors.orange.withOpacity(0.6),
+                                          Colors.deepOrange.withOpacity(0.5),
+                                        ],
+                                      ),
+                                      color: Colors.orangeAccent,
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            height: 125,
+                                            width: 112,
+                                            decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    Colors.orange
+                                                        .withOpacity(0.6),
+                                                    Colors.deepOrange
+                                                        .withOpacity(0.5),
+                                                  ],
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        "https://renilflutter.000webhostapp.com/ecomerce/${dd!.productdata![index].iMAGE}"),
+                                                    fit: BoxFit.cover)),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                              "${dd!.productdata![index].nAME}",
+                                              style: GoogleFonts.asap(
+                                                  fontSize: 18)),
+                                          SizedBox(
+                                            height: 7,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Text(
+                                                "₹${dd!.productdata![index].mRP}",
+                                                style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .lineThrough),
+                                              ),
+                                              Text(
+                                                "₹${dd!.productdata![index].pRICE}",
+                                                style: TextStyle(),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      )),
+                                ),
+                              ),
+                            );
+                          },
+                        ))
+                  ]),
+                ),
               )
             : Center(
                 child: Container(
@@ -785,6 +871,16 @@ class _profileState extends State<profile> {
     return Container(
       child: Stack(children: [
         Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.orange.withOpacity(0.6),
+                Colors.deepOrange.withOpacity(0.5),
+              ],
+            ),
+          ),
           child: Column(children: [
             SizedBox(
               height: 200,
@@ -793,72 +889,138 @@ class _profileState extends State<profile> {
               color: Colors.transparent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              child: ListTile(
-                onTap: () {},
-                trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
-                leading: Icon(Icons.privacy_tip_outlined, color: Colors.white),
-                title: Text("Privacy", style: TextStyle(color: Colors.white)),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.orange.withOpacity(0.6),
+                      Colors.deepOrange.withOpacity(0.5),
+                    ],
+                  ),
+                ),
+                child: ListTile(
+                  onTap: () {},
+                  trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
+                  leading:
+                      Icon(Icons.privacy_tip_outlined, color: Colors.white),
+                  title: Text("Privacy", style: TextStyle(color: Colors.white)),
+                ),
               ),
             ),
             Card(
               color: Colors.transparent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              child: ListTile(
-                onTap: () {},
-                trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
-                leading: Icon(Icons.help, color: Colors.white),
-                title: Text("Help & Support",
-                    style: TextStyle(color: Colors.white)),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.orange.withOpacity(0.6),
+                      Colors.deepOrange.withOpacity(0.5),
+                    ],
+                  ),
+                ),
+                child: ListTile(
+                  onTap: () {},
+                  trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
+                  leading: Icon(Icons.help, color: Colors.white),
+                  title: Text("Help & Support",
+                      style: TextStyle(color: Colors.white)),
+                ),
               ),
             ),
             Card(
               color: Colors.transparent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              child: ListTile(
-                onTap: () {},
-                trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
-                leading: Icon(Icons.settings, color: Colors.white),
-                title: Text("Setting", style: TextStyle(color: Colors.white)),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.orange.withOpacity(0.6),
+                      Colors.deepOrange.withOpacity(0.5),
+                    ],
+                  ),
+                ),
+                child: ListTile(
+                  onTap: () {},
+                  trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
+                  leading: Icon(Icons.settings, color: Colors.white),
+                  title: Text("Setting", style: TextStyle(color: Colors.white)),
+                ),
               ),
             ),
             Card(
               color: Colors.transparent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              child: ListTile(
-                onTap: () {},
-                trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
-                leading: Icon(Icons.person_add, color: Colors.white),
-                title: Text("Invite a Friend",
-                    style: TextStyle(color: Colors.white)),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.orange.withOpacity(0.6),
+                      Colors.deepOrange.withOpacity(0.5),
+                    ],
+                  ),
+                ),
+                child: ListTile(
+                  onTap: () {},
+                  trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
+                  leading: Icon(Icons.person_add, color: Colors.white),
+                  title: Text("Invite a Friend",
+                      style: TextStyle(color: Colors.white)),
+                ),
               ),
             ),
             Card(
               color: Colors.transparent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              child: ListTile(
-                onTap: () {
-                  loginpage.prefs!.setBool("cnt", false);
-                  EasyLoading.show(status: "Please wait");
-                  Future.delayed(Duration(seconds: 2)).then((value) {
-                    EasyLoading.showSuccess("Logout successfull");
-                    Navigator.pushReplacement(context, MaterialPageRoute(
-                      builder: (context) {
-                        return loginpage();
-                      },
-                    ));
-                  });
-                },
-                trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
-                leading: Icon(Icons.logout, color: Colors.white),
-                title: Text("Log out", style: TextStyle(color: Colors.white)),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.orange.withOpacity(0.6),
+                      Colors.deepOrange.withOpacity(0.5),
+                    ],
+                  ),
+                ),
+                child: ListTile(
+                  onTap: () {
+                    loginpage.prefs!.setBool("cnt", false);
+                    EasyLoading.show(status: "Please wait");
+                    Future.delayed(Duration(seconds: 2)).then((value) {
+                      EasyLoading.showSuccess("Logout successfull");
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context) {
+                          return loginpage();
+                        },
+                      ));
+                    });
+                  },
+                  trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
+                  leading: Icon(Icons.logout, color: Colors.white),
+                  title: Text("Log out", style: TextStyle(color: Colors.white)),
+                ),
               ),
             ),
           ]),
-          color: Colors.orange,
+          // color: Colors.orange,
         ),
         Container(
           alignment: Alignment.topCenter,
@@ -869,9 +1031,9 @@ class _profileState extends State<profile> {
               ),
               Text(
                   "${loginpage.prefs!.getString("fname") ?? ""}  ${loginpage.prefs!.getString("lname") ?? ""}",
-                  style: TextStyle(fontSize: 15, color: Colors.black)),
+                  style: TextStyle(fontSize: 15, color: Colors.black54)),
               Text("${loginpage.prefs!.getString("email") ?? ""}",
-                  style: TextStyle(fontSize: 15, color: Colors.black)),
+                  style: TextStyle(fontSize: 15, color: Colors.black54)),
             ],
           ),
           // child: Positioned(
@@ -881,8 +1043,8 @@ class _profileState extends State<profile> {
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(25),
-                  bottomRight: Radius.circular(25))),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30))),
           height: 140,
           width: double.infinity,
         ),
