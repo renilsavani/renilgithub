@@ -59,6 +59,7 @@ dependencies:
   custom_refresh_indicator:
   flutter_animate:
   page_transition:
+  clay_containers:
 
 
 dev_dependencies:

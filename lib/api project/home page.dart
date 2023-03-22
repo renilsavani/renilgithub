@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:http/http.dart' as http;
 import 'package:badges/badges.dart' as badges;
 import 'package:dotted_border/dotted_border.dart';
@@ -18,7 +20,6 @@ import 'package:shoppingapp/api%20project/addproduct.dart';
 import 'package:shoppingapp/api%20project/loginpage.dart';
 import 'package:shoppingapp/api%20project/update%20product.dart';
 import 'package:shoppingapp/api%20project/viewdetailsproduct.dart';
-import 'package:shoppingapp/apps/crop.dart';
 
 class homepage extends StatefulWidget {
   @override
@@ -193,6 +194,7 @@ class _homepageState extends State<homepage> {
                     title:
                         Text('Settings', style: TextStyle(color: Colors.black)),
                   ),
+                  Divider(thickness: 2),
                   ListTile(
                     onTap: () {
                       loginpage.prefs!.setBool("cnt", false);
@@ -298,7 +300,11 @@ class _homepageState extends State<homepage> {
             title: const Text('Ecommerce App'),
             actions: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    a = 1;
+                  });
+                },
                 child: Container(
                   padding: EdgeInsets.only(right: 13, top: 10),
                   child: badges.Badge(
@@ -458,28 +464,39 @@ class _viewproductState extends State<viewproduct> {
                     Container(
                       height: 100,
                       width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: 6,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
+                      child: AnimationLimiter(
+                        child: ListView.builder(
+                          itemCount: 6,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return AnimationConfiguration.staggeredList(
+                              position: 6,
+                              duration: Duration(milliseconds: 375),
+                              child: FadeInAnimation(
+                                duration: Duration(milliseconds: 200),
+                                delay: Duration(milliseconds: 200),
+                                child: Container(
+                                  decoration: BoxDecoration(
 
-                                // border: Border.all(),
-                                image: DecorationImage(
-                                    image: NetworkImage("${image[index]}"),
-                                    fit: BoxFit.fill),
-                                borderRadius: BorderRadius.circular(10)),
-                            margin: EdgeInsets.all(10),
-                            height: 80,
-                            width: 80,
-                            child: Center(
-                              child: Text('${name[index]}',
-                                  style: TextStyle(
-                                      fontSize: 13, color: Colors.white)),
-                            ),
-                          );
-                        },
+                                      // border: Border.all(),
+                                      image: DecorationImage(
+                                          image:
+                                              NetworkImage("${image[index]}"),
+                                          fit: BoxFit.fill),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  margin: EdgeInsets.all(10),
+                                  height: 80,
+                                  width: 80,
+                                  child: Center(
+                                    child: Text('${name[index]}',
+                                        style: TextStyle(
+                                            fontSize: 13, color: Colors.white)),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -502,226 +519,260 @@ class _viewproductState extends State<viewproduct> {
                     Container(
                         height: 400,
                         width: double.infinity,
-                        child: GridView.builder(
-                          itemCount: dd!.productdata!.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 0.8, crossAxisCount: 2),
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                onLongPress: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        backgroundColor: Colors.transparent,
-                                        actions: [
-                                          Center(
-                                            child: Container(
-                                                child: Row(
+                        child: AnimationLimiter(
+                          child: GridView.builder(
+                            itemCount: dd!.productdata!.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 0.8, crossAxisCount: 2),
+                            itemBuilder: (context, index) {
+                              return AnimationConfiguration.staggeredGrid(
+                                position: dd!.productdata!.length,
+                                duration: const Duration(milliseconds: 375),
+                                delay: Duration(seconds: 1),
+                                columnCount: dd!.productdata!.length,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: FadeInAnimation(
+                                    child: ScaleAnimation(
+                                      // delay: Duration(milliseconds: 200),
+                                      child: InkWell(
+                                        onLongPress: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                actions: [
+                                                  Center(
+                                                    child: Container(
+                                                        child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
+                                                            children: [
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) {
+                                                                        return updateproduct(
+                                                                            dd!.productdata![index]);
+                                                                      },
+                                                                    ));
+                                                                  },
+                                                                  child: Text(
+                                                                    "update",
+                                                                    style: TextStyle(
+                                                                        decoration:
+                                                                            TextDecoration
+                                                                                .underline,
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            17),
+                                                                  )),
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    // Navigator.pop(context);
+                                                                    String aa =
+                                                                        "${dd!.productdata![index].iD}";
+                                                                    Map mm = {
+                                                                      "IDD": aa
+                                                                    };
+                                                                    var url = Uri
+                                                                        .parse(
+                                                                            'https://renilflutter.000webhostapp.com/ecomerce/delete.php');
+                                                                    var response =
+                                                                        await http.post(
+                                                                            url,
+                                                                            body:
+                                                                                mm);
+                                                                    print(
+                                                                        'Response status: ${response.statusCode}');
+                                                                    print(
+                                                                        'Response body: ${response.body}');
+                                                                    var aa1 = jsonDecode(
+                                                                        response
+                                                                            .body);
+                                                                    aa2 = ff
+                                                                        .fromJson(
+                                                                            aa1);
+
+                                                                    if (aa2!.connection ==
+                                                                        1) {
+                                                                      if (aa2!.result ==
+                                                                          1) {
+                                                                        EasyLoading.show(
+                                                                            status:
+                                                                                "Please wait");
+                                                                        Future.delayed(Duration(seconds: 2))
+                                                                            .then((value) {
+                                                                          EasyLoading.dismiss(
+                                                                              animation: false);
+                                                                          Navigator.pushReplacement(
+                                                                              context,
+                                                                              MaterialPageRoute(
+                                                                            builder:
+                                                                                (context) {
+                                                                              return homepage();
+                                                                            },
+                                                                          ));
+                                                                        });
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  child: Text(
+                                                                    "delete",
+                                                                    style: TextStyle(
+                                                                        decoration:
+                                                                            TextDecoration
+                                                                                .underline,
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            17),
+                                                                  ))
+                                                            ]),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                gradient:
+                                                                    LinearGradient(
+                                                                  begin: Alignment
+                                                                      .topLeft,
+                                                                  end: Alignment
+                                                                      .bottomRight,
+                                                                  colors: [
+                                                                    Colors
+                                                                        .orange
+                                                                        .withOpacity(
+                                                                            0.6),
+                                                                    Colors
+                                                                        .deepOrange
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                  ],
+                                                                ),
+                                                                // color: Colors.orange.shade300,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20)),
+                                                        height: 70,
+                                                        width: 200),
+                                                  )
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                type: PageTransitionType.fade,
+                                                child: viewdetails(
+                                                    dd!.productdata![index]),
+                                                inheritTheme: true,
+                                                ctx: context),
+                                          );
+                                        },
+                                        child: Card(
+                                          elevation: 5,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: GlassContainer(
+                                              blur: 4,
+                                              opacity: 0.2,
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Colors.orange
+                                                      .withOpacity(0.6),
+                                                  Colors.deepOrange
+                                                      .withOpacity(0.5),
+                                                ],
+                                              ),
+                                              color: Colors.orangeAccent,
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Container(
+                                                    height: 125,
+                                                    width: 112,
+                                                    decoration: BoxDecoration(
+                                                        gradient:
+                                                            LinearGradient(
+                                                          begin:
+                                                              Alignment.topLeft,
+                                                          end: Alignment
+                                                              .bottomRight,
+                                                          colors: [
+                                                            Colors.orange
+                                                                .withOpacity(
+                                                                    0.6),
+                                                            Colors.deepOrange
+                                                                .withOpacity(
+                                                                    0.5),
+                                                          ],
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        image: DecorationImage(
+                                                            image: NetworkImage(
+                                                                "https://renilflutter.000webhostapp.com/ecomerce/${dd!.productdata![index].iMAGE}"),
+                                                            fit: BoxFit.cover)),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                      "${dd!.productdata![index].nAME}",
+                                                      style: GoogleFonts.asap(
+                                                          fontSize: 18)),
+                                                  SizedBox(
+                                                    height: 7,
+                                                  ),
+                                                  Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceEvenly,
                                                     children: [
-                                                      TextButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                            Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                                return updateproduct(
-                                                                    dd!.productdata![
-                                                                        index]);
-                                                              },
-                                                            ));
-                                                          },
-                                                          child: Text(
-                                                            "update",
-                                                            style: TextStyle(
-                                                                decoration:
-                                                                    TextDecoration
-                                                                        .underline,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 17),
-                                                          )),
-                                                      TextButton(
-                                                          onPressed: () async {
-                                                            // Navigator.pop(context);
-                                                            String aa =
-                                                                "${dd!.productdata![index].iD}";
-                                                            Map mm = {
-                                                              "IDD": aa
-                                                            };
-                                                            var url = Uri.parse(
-                                                                'https://renilflutter.000webhostapp.com/ecomerce/delete.php');
-                                                            var response =
-                                                                await http.post(
-                                                                    url,
-                                                                    body: mm);
-                                                            print(
-                                                                'Response status: ${response.statusCode}');
-                                                            print(
-                                                                'Response body: ${response.body}');
-                                                            var aa1 =
-                                                                jsonDecode(
-                                                                    response
-                                                                        .body);
-                                                            aa2 = ff
-                                                                .fromJson(aa1);
-
-                                                            if (aa2!.connection ==
-                                                                1) {
-                                                              if (aa2!.result ==
-                                                                  1) {
-                                                                EasyLoading.show(
-                                                                    status:
-                                                                        "Please wait");
-                                                                Future.delayed(Duration(
-                                                                        seconds:
-                                                                            2))
-                                                                    .then(
-                                                                        (value) {
-                                                                  EasyLoading.dismiss(
-                                                                      animation:
-                                                                          false);
-                                                                  Navigator.pushReplacement(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) {
-                                                                      return homepage();
-                                                                    },
-                                                                  ));
-                                                                });
-                                                              }
-                                                            }
-                                                          },
-                                                          child: Text(
-                                                            "delete",
-                                                            style: TextStyle(
-                                                                decoration:
-                                                                    TextDecoration
-                                                                        .underline,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 17),
-                                                          ))
-                                                    ]),
-                                                decoration: BoxDecoration(
-                                                    gradient: LinearGradient(
-                                                      begin: Alignment.topLeft,
-                                                      end:
-                                                          Alignment.bottomRight,
-                                                      colors: [
-                                                        Colors.orange
-                                                            .withOpacity(0.6),
-                                                        Colors.deepOrange
-                                                            .withOpacity(0.5),
-                                                      ],
-                                                    ),
-                                                    // color: Colors.orange.shade300,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                height: 70,
-                                                width: 200),
-                                          )
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: viewdetails(
-                                            dd!.productdata![index]),
-                                        inheritTheme: true,
-                                        ctx: context),
-                                  );
-                                },
-                                child: Card(
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: GlassContainer(
-                                      blur: 4,
-                                      opacity: 0.2,
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Colors.orange.withOpacity(0.6),
-                                          Colors.deepOrange.withOpacity(0.5),
-                                        ],
+                                                      Text(
+                                                        "₹${dd!.productdata![index].mRP}",
+                                                        style: TextStyle(
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough),
+                                                      ),
+                                                      Text(
+                                                        "₹${dd!.productdata![index].pRICE}",
+                                                        style: TextStyle(),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              )),
+                                        ),
                                       ),
-                                      color: Colors.orangeAccent,
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Container(
-                                            height: 125,
-                                            width: 112,
-                                            decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    Colors.orange
-                                                        .withOpacity(0.6),
-                                                    Colors.deepOrange
-                                                        .withOpacity(0.5),
-                                                  ],
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        "https://renilflutter.000webhostapp.com/ecomerce/${dd!.productdata![index].iMAGE}"),
-                                                    fit: BoxFit.cover)),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                              "${dd!.productdata![index].nAME}",
-                                              style: GoogleFonts.asap(
-                                                  fontSize: 18)),
-                                          SizedBox(
-                                            height: 7,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                "₹${dd!.productdata![index].mRP}",
-                                                style: TextStyle(
-                                                    decoration: TextDecoration
-                                                        .lineThrough),
-                                              ),
-                                              Text(
-                                                "₹${dd!.productdata![index].pRICE}",
-                                                style: TextStyle(),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      )),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ))
                   ]),
                 ),
@@ -866,6 +917,8 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
+  Color baseColor = Color(0xFFF2F2F2);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -1053,6 +1106,7 @@ class _profileState extends State<profile> {
             left: 100,
             right: 100,
             child: CircleAvatar(
+              // foregroundColor: Colors.grey,
               backgroundImage: NetworkImage(
                   "https://renilflutter.000webhostapp.com/ecomerce/${loginpage.prefs!.getString("image") ?? ""}"),
               radius: 60,

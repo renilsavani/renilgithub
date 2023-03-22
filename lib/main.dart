@@ -6,13 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rive/rive.dart';
-import 'package:shoppingapp/apps/page1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shoppingapp/apps/page2.dart';
 import 'api project/home page.dart';
 import 'api project/loginpage.dart';
 
