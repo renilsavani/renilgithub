@@ -146,7 +146,7 @@ class _updateproductState extends State<updateproduct>
                     child: DropdownButton(
                       hint: Text('Select a category'),
                       // Not necessary for Option 1
-                      value: _selectedLocation,
+                      value: widget.productdata.cAT,
                       onChanged: (newValue) {
                         setState(() {
                           _selectedLocation = newValue!;
@@ -376,7 +376,7 @@ class _updateproductState extends State<updateproduct>
                     child: DropdownButton(
                       hint: Text('Warrenty Available'),
                       // Not necessary for Option 1
-                      value: _selectedwarrenry,
+                      value: widget.productdata.wARRENTY,
                       onChanged: (newValue) {
                         setState(() {
                           _selectedwarrenry = newValue!;

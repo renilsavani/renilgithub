@@ -39,10 +39,22 @@ class _addproductState extends State<addproduct>
   String? _selectedwarrenry;
   view? aa;
   final ImagePicker _picker = ImagePicker();
-  String img = "";
+
+  // String img = "";
+  List<XFile> imagelist = [];
   String warr = "";
   List addphoto = [];
   late TabController _tabController;
+
+  asss() async {
+    var pickedfiles = await _picker.pickMultiImage();
+    if (pickedfiles != null) {
+      imagelist = pickedfiles;
+      setState(() {});
+    } else {
+      print("No image is selected.");
+    }
+  }
 
   @override
   void initState() {
@@ -66,6 +78,7 @@ class _addproductState extends State<addproduct>
   TextEditingController que = TextEditingController();
   TextEditingController dis = TextEditingController();
   bool loder = false;
+  String? imagename;
 
   @override
   Widget build(BuildContext context) {
@@ -391,17 +404,18 @@ class _addproductState extends State<addproduct>
                           padding: const EdgeInsets.only(left: 20),
                           child: Card(
                             color: Colors.transparent,
-                            child: Container(  decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Colors.indigoAccent.withOpacity(0.6),
-                                  Colors.blue.withOpacity(0.5),
-                                ],
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.indigoAccent.withOpacity(0.6),
+                                    Colors.blue.withOpacity(0.5),
+                                  ],
+                                ),
                               ),
-                            ),
                               child: TextButton(
                                   onPressed: () {
                                     _tabController.animateTo(0);
@@ -424,17 +438,18 @@ class _addproductState extends State<addproduct>
                           padding: const EdgeInsets.only(right: 20),
                           child: Card(
                             color: Colors.transparent,
-                            child: Container(  decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Colors.indigoAccent.withOpacity(0.6),
-                                  Colors.blue.withOpacity(0.5),
-                                ],
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.indigoAccent.withOpacity(0.6),
+                                    Colors.blue.withOpacity(0.5),
+                                  ],
+                                ),
                               ),
-                            ),
                               child: TextButton(
                                   onPressed: () {
                                     _tabController.animateTo(2);
@@ -456,106 +471,129 @@ class _addproductState extends State<addproduct>
               ),
             ),
             Container(
-              child: Column(children: [
-                SizedBox(height: 40),
-                Container(
-                    padding: EdgeInsets.only(left: 20),
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Add Product image",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    )),
-                SizedBox(
-                  height: 20,
-                ),
-                DottedBorder(
-                    child: InkWell(
-                  onTap: () async {
-                    final XFile? image =
-                        await _picker.pickImage(source: ImageSource.gallery);
-                    img = image!.path;
-                  },
-                  child: Container(
-                    child: Image.file(File(img), fit: BoxFit.cover),
-                    height: 110,
-                    width: 110,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
                   ),
-                )),
-                SizedBox(
-                  height: 50,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Card(
-                          color: Colors.transparent,
-                          child: Container(  decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Colors.indigoAccent.withOpacity(0.6),
-                                Colors.blue.withOpacity(0.5),
-                              ],
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.indigoAccent.withOpacity(0.6),
+                          Colors.blue.withOpacity(0.5),
+                        ],
+                      ),
+                    ),
+                    child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            asss();
+                          });
+                        },
+                        child: Text(
+                          "Select image",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        )),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  imagelist != null
+                      ? Wrap(
+                          children: imagelist!.map((imageone) {
+                            return Container(
+                                child: Card(
+                              child: Container(
+                                height: 100,
+                                width: 100,
+                                child: Image.file(File(imageone.path)),
+                              ),
+                            ));
+                          }).toList(),
+                        )
+                      : Container(),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Card(
+                            color: Colors.transparent,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.indigoAccent.withOpacity(0.6),
+                                    Colors.blue.withOpacity(0.5),
+                                  ],
+                                ),
+                              ),
+                              child: TextButton(
+                                  onPressed: () {
+                                    _tabController.animateTo(1);
+                                  },
+                                  child: Text(
+                                    "Back",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 16),
+                                  )),
                             ),
-                          ),
-                            child: TextButton(
-                                onPressed: () {
-                                  _tabController.animateTo(1);
-                                },
-                                child: Text(
-                                  "Back",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 16),
-                                )),
                           ),
                         ),
                       ),
-                    ),
-                    Spacer(),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: Card(
-                          color: Colors.transparent,
-                          child: Container(  decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Colors.indigoAccent.withOpacity(0.6),
-                                Colors.blue.withOpacity(0.5),
-                              ],
+                      Spacer(),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: Card(
+                            color: Colors.transparent,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Colors.indigoAccent.withOpacity(0.6),
+                                    Colors.blue.withOpacity(0.5),
+                                  ],
+                                ),
+                              ),
+                              child: TextButton(
+                                  onPressed: () {
+                                    _tabController.animateTo(3);
+                                  },
+                                  child: Text(
+                                    "Next",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 16),
+                                  )),
                             ),
-                          ),
-                            child: TextButton(
-                                onPressed: () {
-                                  _tabController.animateTo(3);
-                                },
-                                child: Text(
-                                  "Next",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 16),
-                                )),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              ]),
+                    ],
+                  )
+                ],
+              ),
             ),
             Container(
               child: SingleChildScrollView(
@@ -601,17 +639,18 @@ class _addproductState extends State<addproduct>
                       padding: const EdgeInsets.only(left: 20),
                       child: Card(
                         color: Colors.transparent,
-                        child: Container(  decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Colors.indigoAccent.withOpacity(0.6),
-                              Colors.blue.withOpacity(0.5),
-                            ],
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.indigoAccent.withOpacity(0.6),
+                                Colors.blue.withOpacity(0.5),
+                              ],
+                            ),
                           ),
-                        ),
                           child: TextButton(
                               onPressed: () {
                                 _tabController.animateTo(2);
@@ -647,8 +686,12 @@ class _addproductState extends State<addproduct>
                       activeTrackColor: Colors.grey.shade300,
                       onSwipe: () async {
                         String id = loginpage.prefs!.getString("userid") ?? "";
-                        List<int> imagebyte = File(img).readAsBytesSync();
-                        String imagename = base64Encode(imagebyte);
+                        for (int i = 0; i < imagelist.length; i++) {
+                          List<int> imagebyte =
+                              File(imagelist[i].path).readAsBytesSync();
+                          imagename = base64Encode(imagebyte);
+                        }
+
                         print(id);
                         Map addpro = {
                           "useridd": id,
