@@ -42,6 +42,7 @@ class _addproductState extends State<addproduct>
 
   // String img = "";
   List<XFile> imagelist = [];
+  List<String> imagedatalist = [];
   String warr = "";
   List addphoto = [];
   late TabController _tabController;
@@ -78,7 +79,6 @@ class _addproductState extends State<addproduct>
   TextEditingController que = TextEditingController();
   TextEditingController dis = TextEditingController();
   bool loder = false;
-  String? imagename;
 
   @override
   Widget build(BuildContext context) {
@@ -689,7 +689,12 @@ class _addproductState extends State<addproduct>
                         for (int i = 0; i < imagelist.length; i++) {
                           List<int> imagebyte =
                               File(imagelist[i].path).readAsBytesSync();
-                          imagename = base64Encode(imagebyte);
+                        String imagename = base64Encode(imagebyte);
+
+                        setState(() {
+                          imagedatalist.add(imagename);
+                        });
+                        print("$imagedatalist===");
                         }
 
                         print(id);
@@ -702,7 +707,8 @@ class _addproductState extends State<addproduct>
                           "mrp": mrp.text,
                           "que": que.text,
                           "warren": warr,
-                          "image": imagename,
+                          "image": "$imagedatalist",
+                          "totalimage":"${imagedatalist.length}",
                           "dis": dis.text,
                         };
 

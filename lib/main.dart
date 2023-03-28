@@ -1,17 +1,10 @@
 import 'dart:async';
 
-import 'package:animator/animator.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lottie/lottie.dart';
-import 'package:rive/rive.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'api project/home page.dart';
 import 'api project/loginpage.dart';
 
 void main() {

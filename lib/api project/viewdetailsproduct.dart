@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shoppingapp/api%20project/home%20page.dart';
 import 'package:http/http.dart' as http;
-import 'package:shoppingapp/api%20project/update%20product.dart';
+import 'package:shoppingapp/api%20project/loginpage.dart';
 
 class viewdetails extends StatefulWidget {
   Productdata productdata;
@@ -17,6 +20,51 @@ class viewdetails extends StatefulWidget {
 
 class _viewdetailsState extends State<viewdetails> {
   ff? aa2;
+  Razorpay _razorpay = Razorpay();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    data();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("$response")));
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("$response")));
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("$response")));
+  }
+
+  ddd? dd;
+
+  data() async {
+    String id = loginpage.prefs!.getString("userid") ?? "";
+    Map m = {"ID": id};
+    var url = Uri.parse(
+        'https://renilflutter.000webhostapp.com/ecomerce/viewmultiimage.php');
+    var response = await http.post(url, body: m);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    var mm = jsonDecode(response.body);
+    setState(() {
+      dd = ddd.fromJson(mm);
+    });
+  }
+
+  double curent = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +95,19 @@ class _viewdetailsState extends State<viewdetails> {
           )),
           Expanded(
               child: InkWell(
-            onTap: () {},
+            onTap: () {
+              var options = {
+                'key': 'rzp_test_WRmb2eQyO3F0DX',
+                'amount': 10000,
+                'name': 'Acme Corp.',
+                'description': 'Fine T-Shirt',
+                'prefill': {
+                  'contact': '7622944569',
+                  'email': 'test@razorpay.com'
+                }
+              };
+              _razorpay.open(options);
+            },
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(topRight: Radius.circular(25)),
@@ -175,16 +235,36 @@ class _viewdetailsState extends State<viewdetails> {
           SizedBox(
             height: 30,
           ),
-          Center(
-            child: Container(
-                height: 300,
-                width: 300,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            "https://renilflutter.000webhostapp.com/ecomerce/${widget.productdata.iMAGE}"),
-                        fit: BoxFit.cover))),
-          ),
+
+          CarouselSlider.builder(
+              itemCount: widget.productdata.iMAGE!.length,
+              itemBuilder: (context, index, realIndex) {
+                return PhotoView(
+                    imageProvider:
+                        NetworkImage("${widget.productdata.iMAGE![index]}"));
+              },
+              options: CarouselOptions(
+                  enableInfiniteScroll: false,
+                  initialPage: 0,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      print("====$index");
+                      curent = double.parse("$index");
+                    });
+                  },
+                  // height: 300,
+                  enlargeCenterPage: true,
+                  viewportFraction: 0.8)),
+          // Center(
+          //   child: Container(
+          //       height: 300,
+          //       width: 300,
+          //       decoration: BoxDecoration(
+          //           image: DecorationImage(
+          //               image: NetworkImage(
+          //                   "https://renilflutter.000webhostapp.com/ecomerce/${widget.productdata.iMAGE}"),
+          //               fit: BoxFit.cover))),
+          // ),
           SizedBox(
             height: 20,
           ),

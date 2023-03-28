@@ -44,7 +44,6 @@ dependencies:
   glassmorphism_widgets: ^0.1.4
   lottie:
   image_picker:
-  image_cropper:
   date_time_picker:
   badges:
   http:
@@ -52,15 +51,14 @@ dependencies:
   flutter_advanced_drawer:
   dotted_border:
   flutter_easyloading:
-  connectivity_plus:
-  internet_connection_checker:
   flutter_swipe_button:
   flutter_staggered_animations:
   custom_refresh_indicator:
   flutter_animate:
   page_transition:
-  clay_containers:
-
+  razorpay_flutter:
+  carousel_slider:
+  photo_view:
 
 dev_dependencies:
   flutter_test:
